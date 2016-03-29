@@ -41,14 +41,18 @@ public class TwitupTwitCreationView extends JPanel implements IView{
 		JLabel MessageBodyLabel = new JLabel("Corps du message");
 		
 		JTextArea MessageBodyText = new JTextArea(5, 20);
+		
 		JButton buttonCreationTwit = new JButton("Enregistrer twit");
 		buttonCreationTwit.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent event){
 				Twit twit=new Twit(twitupTwitController.getUser(),MessageBodyText.getText());
 				twitupTwitController.addTwit(twit);
+				MessageBodyText.setText("");
 				twitupTwitController.goTo("Accueil");
+				
 			}
 		});
+		
 		
 		this.add(MessageBodyLabel, new GridBagConstraints(0, 0, 1, 1, 1, 1,
 				GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(

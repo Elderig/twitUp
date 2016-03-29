@@ -1,5 +1,7 @@
 package com.iup.twitup.controllers;
 
+import javax.swing.JOptionPane;
+
 import com.iup.tp.twitup.core.EntityManager;
 import com.iup.tp.twitup.core.Twitup;
 import com.iup.tp.twitup.datamodel.IDatabase;
@@ -71,11 +73,18 @@ public class TwitupTwitController implements IDatabaseObserver{
 		this.controllerParent = controllerParent;
 	}
 	
+	public void addFollower(String tagToFollow){
+		user.addFollowing(tagToFollow);
+	}
 	
 	@Override
 	public void notifyTwitAdded(Twit addedTwit) {
 		// TODO Auto-generated method stub
 		accueilPanel.addComponentTwit(addedTwit);
+		if(user != null && user.isFollowing(addedTwit.getTwiter()) && user.getUuid() != addedTwit.getTwiter().getUuid()){
+			accueilPanel.notifNewTweet(addedTwit.getTwiter().getUserTag());
+		}
+
 	}
 
 	@Override
