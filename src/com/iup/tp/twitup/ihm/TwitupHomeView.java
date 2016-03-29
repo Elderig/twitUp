@@ -16,8 +16,10 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import com.iup.tp.twitup.common.Globals;
 import com.iup.tp.twitup.datamodel.IDatabase;
 import com.iup.tp.twitup.datamodel.Twit;
 import com.iup.twitup.controllers.TwitupTwitController;
@@ -64,7 +66,7 @@ public class TwitupHomeView extends JPanel implements IView{
 
 	public void addComponentTwit(Twit twit){
 
-		TwitComponent twitcomponent=new TwitComponent(twit,ligne);
+		TwitComponent twitcomponent=new TwitComponent(twit,ligne,twitupTwitController );
 		this.add(twitcomponent,new GridBagConstraints(0, ligne, 1, 1, 1, 1,
 				GridBagConstraints.LINE_START, GridBagConstraints.NONE, new Insets(
 						5, 5, 0, 5), 0, 0));
@@ -80,5 +82,9 @@ public class TwitupHomeView extends JPanel implements IView{
 	public void refresh() {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	public void notifNewTweet(String userTag){
+		JOptionPane.showMessageDialog(TwitupHomeView.this, userTag + " a posté un nouveau twit !", "Nouveau Twit", JOptionPane.INFORMATION_MESSAGE,null);
 	}
 }
