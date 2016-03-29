@@ -32,6 +32,8 @@ public class TwitupProfilView extends JPanel implements IView{
 	protected JLabel usernameLabel;
 	protected JLabel usertagLabel;
 	
+	protected ImagePanel ProfilImage;
+	
 	public TwitupProfilView(IDatabase database, TwitupUserController twitupUserController){
 		mDatabase = database;
 		this.twitupUserController = twitupUserController;
@@ -42,6 +44,9 @@ public class TwitupProfilView extends JPanel implements IView{
 		this.setLayout(new GridBagLayout());
 			usernameLabel = new JLabel();
 			usertagLabel = new JLabel();
+			//ProfilImage= new ImagePanel(null,2);
+			
+		
 		
 		this.add(usernameLabel, new GridBagConstraints(0, 0, 1, 1, 1, 1,
 				GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(

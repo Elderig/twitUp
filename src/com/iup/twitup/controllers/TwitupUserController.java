@@ -79,9 +79,9 @@ public class TwitupUserController implements IDatabaseObserver{
 		}
 	}
 	
-	public void inscription(String username, String password, String usertag){
+	public void inscription(String username, String password, String usertag, String url_image){
 		// Création d'un utilisateur fictif
-		User newUser = this.generateUser(username, password, usertag);
+		User newUser = this.generateUser(username, password, usertag, url_image);
 
 		// Génération du fichier utilisateur
 		this.mEntityManager.sendUser(newUser);
@@ -92,9 +92,9 @@ public class TwitupUserController implements IDatabaseObserver{
 	/**
 	 * Génération d'un utilisateur fictif.
 	 */
-	protected User generateUser(String username, String password, String usertag) {
+	protected User generateUser(String username, String password, String usertag, String url_image) {
 		User newUser = new User(UUID.randomUUID(), usertag, password, username,
-				new HashSet<String>(), "");
+				new HashSet<String>(), url_image);
 		return newUser;
 	}
 

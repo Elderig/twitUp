@@ -264,8 +264,6 @@ public class TwitupMainView extends JFrame
 		p.add(mainPanel,BorderLayout.CENTER);
 		toolbar=new ToolbarComponent(mDatabase,twitup.getTwitupTwitController(),twitup.getTwitupUserController());
 		p.add(toolbar, BorderLayout.NORTH);
-		//p.add(mainPanel, BorderLayout.WEST);
-		//System.out.println(twitup.getCurrentUser());
 
 		setVisible(true);
 	}

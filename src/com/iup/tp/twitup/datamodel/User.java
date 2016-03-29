@@ -65,14 +65,6 @@ public class User
     mFollows = follows;
     mAvatarPath = avatarPath;
   }
-  
-  public User(String username, String usertag, String userpassword){
-	  mUserTag = usertag;
-	  mUserPassword = userpassword;
-	  mName = username;
-	  mUuid = UUID.randomUUID();
-	  mFollows = new HashSet<String>();
-  }
 
   /**
    * Retourne l'identifiant unique de l'utilisateur.
