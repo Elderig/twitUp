@@ -53,7 +53,7 @@ public class TwitupListUserView extends JPanel implements IView{
 
 	public void addComponentUser(User user){
 
-		UserComponent usercomponent=new UserComponent(user,ligne);
+		UserComponent usercomponent=new UserComponent(user, ligne, twitupUserController);
 		this.add(usercomponent,new GridBagConstraints(0, ligne, 1, 1, 1, 1,
 				GridBagConstraints.LINE_START, GridBagConstraints.NONE, new Insets(
 						5, 5, 0, 5), 0, 0));

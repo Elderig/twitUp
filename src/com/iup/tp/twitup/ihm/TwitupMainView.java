@@ -228,12 +228,12 @@ public class TwitupMainView extends JFrame
 			}
 		});
 		menuFichier.add(menuItemListUser);
-		menuFichier.add(menuItemDeconnexion);
 		menuItemQuitter.setIcon(iconExit);
 		menuItemQuitter.setToolTipText(Globals.TOOLTIP_EXIT);
-		menuFichier.add(menuItemQuitter);
 		menuFichier.add(menuItemChangeRep);
 		menuFichier.add(menuItemChangeUI);
+		menuFichier.add(menuItemDeconnexion);
+		menuFichier.add(menuItemQuitter);
 		menuBar.add(menuFichier);
 
 		// Menu Onglet Aide

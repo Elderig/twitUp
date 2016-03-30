@@ -38,26 +38,30 @@ public class TwitupTwitCreationView extends JPanel implements IView{
 		
 		JLabel titleCreationTwit = new JLabel("Création d'un Twit");
 		
-		JLabel MessageBodyLabel = new JLabel("Corps du message");
+		JLabel messageBodyLabel = new JLabel("Corps du message");
 		
-		JTextArea MessageBodyText = new JTextArea(5, 20);
+		JTextArea messageBodyText = new JTextArea(5, 20);
 		
 		JButton buttonCreationTwit = new JButton("Enregistrer twit");
 		buttonCreationTwit.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent event){
-				Twit twit=new Twit(twitupTwitController.getUser(),MessageBodyText.getText());
-				twitupTwitController.addTwit(twit);
-				MessageBodyText.setText("");
-				twitupTwitController.goTo("Accueil");
+				if(messageBodyText.getText().length() < 150){
+					Twit twit=new Twit(twitupTwitController.getUser(),messageBodyText.getText());
+					twitupTwitController.addTwit(twit);
+					messageBodyText.setText("");
+					twitupTwitController.goTo("Accueil");
+				}else{
+					JOptionPane.showMessageDialog(TwitupTwitCreationView.this, "Vous avez écrit "+messageBodyText.getText().length()+" caractères, la limite est de 150.", "Erreur taille du twit", JOptionPane.INFORMATION_MESSAGE,null);
+				}
+				
 				
 			}
 		});
 		
-		
-		this.add(MessageBodyLabel, new GridBagConstraints(0, 0, 1, 1, 1, 1,
+		this.add(messageBodyLabel, new GridBagConstraints(0, 0, 1, 1, 1, 1,
 				GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(
 						5, 5, 0, 5), 0, 0));
-		this.add(MessageBodyText, new GridBagConstraints(1, 0, 2, 1, 1, 1,
+		this.add(messageBodyText, new GridBagConstraints(1, 0, 2, 1, 1, 1,
 				GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(
 						5, 5, 0, 5), 0, 0));
 		this.add(buttonCreationTwit, new GridBagConstraints(1, 1, 2, 1, 1, 1,

@@ -133,9 +133,14 @@ public class User
    * @param tagToRemove
    *          , tag à retirer.
    */
-  public void removeFollowing(String tagToRemove)
+  public boolean removeFollowing(String tagToRemove)
   {
-    this.mFollows.remove(tagToRemove);
+	  if(mFollows.contains(tagToRemove)){
+		  this.mFollows.remove(tagToRemove);
+		  return true;
+	  }else{
+		  return false;
+	  }
   }
 
   /**
@@ -143,10 +148,17 @@ public class User
    * 
    * @param tagToFollow
    *          , tag à ajouter.
+ * @return 
    */
-  public void addFollowing(String tagToFollow)
+  public boolean addFollowing(String tagToFollow)
   {
-    this.mFollows.add(tagToFollow);
+	  if(mFollows.contains(tagToFollow)){
+		  return false;
+	  }else{
+		  this.mFollows.add(tagToFollow);
+		  return true;
+	  }
+    
   }
 
   /**

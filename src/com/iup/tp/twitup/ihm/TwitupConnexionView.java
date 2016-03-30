@@ -44,6 +44,20 @@ public class TwitupConnexionView extends JPanel implements IView  {
 		JLabel passwordLabel = new JLabel("Mot de passe");
 		
 		JTextField passwordText = new JTextField(20);
+		passwordText.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent event){
+				if (usernameText.getText() != null && passwordText.getText() != null
+					&& twitupUserController.checkUser(usernameText.getText(), passwordText.getText())){
+					twitupUserController.goTo("Accueil");
+					usernameText.setText("");
+					passwordText.setText("");
+				}else{
+					JOptionPane.showMessageDialog(null, "Identifiants incorrects", "Erreur identifiants", JOptionPane.INFORMATION_MESSAGE);
+					usernameText.setText("");
+					passwordText.setText("");
+				}
+			}
+		});
 		
 		JButton buttonConnexion = new JButton("Se connecter");
 		buttonConnexion.addActionListener(new ActionListener(){

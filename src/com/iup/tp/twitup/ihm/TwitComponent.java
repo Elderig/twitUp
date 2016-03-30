@@ -10,9 +10,11 @@ import java.util.Date;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import com.iup.tp.twitup.datamodel.Twit;
+import com.iup.tp.twitup.datamodel.User;
 import com.iup.twitup.controllers.TwitupTwitController;
 
 public class TwitComponent extends JPanel{
@@ -24,14 +26,22 @@ public class TwitComponent extends JPanel{
 	private JLabel textTwit;
 	private JLabel dateTwit;
 	private JButton followUser;
+	private User createurTwit;
+	private Twit twit;
 	
 	public TwitupTwitController twitupTwitController;
 	
-	Date d;
+	private Date d;
 
-	public TwitComponent(Twit twit, Integer ligne, TwitupTwitController twitupTwitController){
+	public TwitComponent(Twit twitCreated, Integer ligne, TwitupTwitController controller){
 		
-		this.twitupTwitController = twitupTwitController;
+		twitupTwitController = controller;
+		
+		//Twit
+		this.twit = twitCreated;
+		
+		//User qui a écrit le twit
+		createurTwit=twit.getTwiter();
 		
 		// Label Text
 		textTwit=new JLabel(twit.getText());
@@ -46,7 +56,12 @@ public class TwitComponent extends JPanel{
 		followUser =new JButton("Follow " + twit.getTwiter().getName());
 		followUser.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent event){
-				twitupTwitController.addFollower(twit.getTwiter().getUserTag());
+				if(twitupTwitController.getUser().getName() != twit.getTwiter().getName()){
+					twitupTwitController.addFollower(twit.getTwiter().getUserTag());
+				}else{
+					JOptionPane.showMessageDialog(null, "Vous ne pouvez pas vous follow vous-même", "Erreur follow", JOptionPane.INFORMATION_MESSAGE);
+				}
+				
 			}
 		});
 		
@@ -61,5 +76,51 @@ public class TwitComponent extends JPanel{
 				GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(
 						5, 5, 0, 5), 0, 0));
 	}
+
+	public JLabel getTextTwit() {
+		return textTwit;
+	}
+
+	public void setTextTwit(JLabel textTwit) {
+		this.textTwit = textTwit;
+	}
+
+	public JLabel getDateTwit() {
+		return dateTwit;
+	}
+
+	public void setDateTwit(JLabel dateTwit) {
+		this.dateTwit = dateTwit;
+	}
+
+	public JButton getFollowUser() {
+		return followUser;
+	}
+
+	public void setFollowUser(JButton followUser) {
+		this.followUser = followUser;
+	}
+
+	public User getCreateurTwit() {
+		return createurTwit;
+	}
+
+	public void setCreateurTwit(User createurTwit) {
+		this.createurTwit = createurTwit;
+	}
+
+	public Twit getTwit() {
+		return twit;
+	}
+
+	public void setTwit(Twit twit) {
+		this.twit = twit;
+	}
+	
+	
+	
+	
+	
+	
 
 }

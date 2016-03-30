@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -18,6 +19,8 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
 import com.iup.tp.twitup.common.Globals;
 import com.iup.tp.twitup.datamodel.IDatabase;
@@ -34,6 +37,8 @@ public class TwitupHomeView extends JPanel implements IView{
 	protected IDatabase mDatabase;
 	
 	protected Integer ligne=1;
+	
+	protected ArrayList<TwitComponent> listTwits;
 
 	public TwitupHomeView(IDatabase database, TwitupTwitController twitupTwitController){
 		mDatabase = database;
@@ -44,6 +49,9 @@ public class TwitupHomeView extends JPanel implements IView{
 
 			this.setLayout(new GridBagLayout());
 
+			//Liste de tout les twits
+			listTwits = new ArrayList<TwitComponent>();
+			
 			JLabel titleTwitList = new JLabel("Liste des twits");
 
 			JButton buttonCreationTwit = new JButton("Créer un twit");
@@ -53,8 +61,29 @@ public class TwitupHomeView extends JPanel implements IView{
 				}
 			});
 			
+			JTextField recherche = new JTextField(10);
+			recherche.addActionListener(new ActionListener(){
+				public void actionPerformed(ActionEvent event){
+					twitupTwitController.rechercher(recherche.getText());
+				}
+			});
+			
+			JButton buttonRechercher = new JButton("Rechercher");
+			buttonRechercher.addActionListener(new ActionListener(){
+				public void actionPerformed(ActionEvent event){
+					twitupTwitController.rechercher(recherche.getText());
+				}
+			});
+			
 			this.add(buttonCreationTwit, new GridBagConstraints(0, ligne, 2, 1, 1, 1,
 					GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(
+							5, 5, 0, 5), 0, 0));
+			ligne++;
+			this.add(recherche, new GridBagConstraints(0, ligne, 1, 1, 1, 1,
+					GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(
+							5, 5, 0, 5), 0, 0));
+			this.add(buttonRechercher, new GridBagConstraints(1, ligne, 1, 1, 1, 1,
+					GridBagConstraints.LINE_START, GridBagConstraints.NONE, new Insets(
 							5, 5, 0, 5), 0, 0));
 			ligne++;
 			this.add(titleTwitList, new GridBagConstraints(0, ligne, 1, 1, 1, 1,
@@ -67,10 +96,12 @@ public class TwitupHomeView extends JPanel implements IView{
 	public void addComponentTwit(Twit twit){
 
 		TwitComponent twitcomponent=new TwitComponent(twit,ligne,twitupTwitController );
+		listTwits.add(twitcomponent);
 		this.add(twitcomponent,new GridBagConstraints(0, ligne, 1, 1, 1, 1,
 				GridBagConstraints.LINE_START, GridBagConstraints.NONE, new Insets(
 						5, 5, 0, 5), 0, 0));
 		ligne++;
+		
 	}
 	
 	@Override
@@ -80,10 +111,21 @@ public class TwitupHomeView extends JPanel implements IView{
 
 	@Override
 	public void refresh() {
-		// TODO Auto-generated method stub
+		if(this.getParent() != null){
+			this.getParent().revalidate();
+			this.getParent().repaint();
+		}
 		
 	}
 	
+	public ArrayList<TwitComponent> getListTwits() {
+		return listTwits;
+	}
+
+	public void setListTwits(ArrayList<TwitComponent> listTwits) {
+		this.listTwits = listTwits;
+	}
+
 	public void notifNewTweet(String userTag){
 		JOptionPane.showMessageDialog(TwitupHomeView.this, userTag + " a posté un nouveau twit !", "Nouveau Twit", JOptionPane.INFORMATION_MESSAGE,null);
 	}

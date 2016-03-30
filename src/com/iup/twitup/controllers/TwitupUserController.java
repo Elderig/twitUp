@@ -79,6 +79,14 @@ public class TwitupUserController implements IDatabaseObserver{
 		}
 	}
 	
+	public boolean addFollower(String tagToFollow){
+		return user.addFollowing(tagToFollow);
+	}
+	
+	public boolean removeFollower(String tagToFollow){
+		return user.removeFollowing(tagToFollow);
+	}
+	
 	public void inscription(String username, String password, String usertag, String url_image){
 		// Création d'un utilisateur fictif
 		User newUser = this.generateUser(username, password, usertag, url_image);
