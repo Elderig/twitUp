@@ -1,5 +1,9 @@
 package com.iup.twitup.controllers;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.swing.JOptionPane;
 
 import com.iup.tp.twitup.common.Constants;
@@ -27,15 +31,19 @@ public class TwitupTwitController implements IDatabaseObserver{
 	
 	public TwitupHomeView accueilPanel;
 	
+	public Set<Twit> listTwits;
+	
 	public TwitupTwitController(IDatabase database, Twitup controllerParent, EntityManager mEntityManager){
 		mDatabase = database;
 		this.controllerParent = controllerParent;
 		this.mEntityManager=mEntityManager;
 		mDatabase.addObserver(this);
+		listTwits = new HashSet<Twit>();
 	}
 	
 	public TwitupHomeView initAccueil(){
 		accueilPanel = new TwitupHomeView(mDatabase, this);
+		listTwits = mDatabase.getTwits();
 		accueilPanel.init();
 		return accueilPanel;
 	}
@@ -80,41 +88,38 @@ public class TwitupTwitController implements IDatabaseObserver{
 	}
 	
 	public void rechercher(String text){
-		if(text.equals("")){
-			for(TwitComponent t : accueilPanel.getListTwits()){
-				t.setVisible(true);
-			}
-			return;
+		listTwits = mDatabase.getTwits();
+		Set<Twit> listToSendToView = new HashSet<Twit>();
+		for(Twit t : listTwits){
+			if(text.equals("")){
+				listToSendToView.add(t);
+			}else if (t.getText().contains(text)
+					|| t.getTwiter().getName().contains(text)
+					|| t.getTags().contains(text)
+					|| t.getUserTags().contains(text)){
+				listToSendToView.add(t);
+			}else if(text.substring(0,1).equals(Constants.USER_TAG_DELIMITER)
+					&& text.substring(1, text.length()).equals(t.getTwiter().getName())){
+				listToSendToView.add(t);
+			}else if (text.substring(0,1).equals(Constants.WORD_TAG_DELIMITER) 
+					&& t.getUserTags().contains(text.substring(1, text.length()))){
+				listToSendToView.add(t);
+			}	
 		}
-		if(accueilPanel.getListTwits()!=null){
-			for(TwitComponent t : accueilPanel.getListTwits()){
-				if(t.getTextTwit().getText().contains(text) 
-					|| t.getCreateurTwit().getName().contains(text)
-					|| t.getTwit().getTags().contains(text)
-					|| t.getTwit().getUserTags().contains(text)){
-						t.setVisible(true);
-				}
-				else if(text.substring(0,1).equals(Constants.USER_TAG_DELIMITER)
-					&& text.substring(1, text.length()).equals(t.getCreateurTwit().getName())){
-						t.setVisible(true);
-				}else if (text.substring(0,1).equals(Constants.WORD_TAG_DELIMITER) 
-					&& t.getTwit().getUserTags().contains(text.substring(1, text.length()))){
-						t.setVisible(true);
-				}else{
-					t.setVisible(false);
-				}
-			}
-		}
+		accueilPanel.afficherTwit(listToSendToView);
 	}
 	
 	@Override
 	public void notifyTwitAdded(Twit addedTwit) {
 		// TODO Auto-generated method stub
-		accueilPanel.addComponentTwit(addedTwit);
+		listTwits = mDatabase.getTwits();
+		listTwits.add(addedTwit);
+		accueilPanel.afficherTwit(listTwits);
 		accueilPanel.refresh();
 		if(user != null && user.isFollowing(addedTwit.getTwiter()) && user.getUuid() != addedTwit.getTwiter().getUuid()){
 			accueilPanel.notifNewTweet(addedTwit.getTwiter().getUserTag());
 		}
+		
 
 	}
 
