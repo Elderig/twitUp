@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<ns2:twitXml xmlns:ns2="http://www.example.org/twit/">
-    <ID>d48efeb7-bced-49a9-986b-5e74ea0ce2a5</ID>
-    <EmissionDate>1459325952570</EmissionDate>
-    <Twiter>23ee604c-6894-46d2-8104-e01bb70f813c</Twiter>
-    <Text>@raph</Text>
-</ns2:twitXml>
