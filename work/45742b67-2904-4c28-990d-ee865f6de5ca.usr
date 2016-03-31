@@ -2,7 +2,7 @@
 <ns2:userXml xmlns:ns2="http://www.example.org/twit/">
     <ID>45742b67-2904-4c28-990d-ee865f6de5ca</ID>
     <UserTag>raph</UserTag>
-    <UserPassword>raph</UserPassword>
-    <Name>raph</Name>
-    <AvatarPath></AvatarPath>
+    <UserPassword>aaaabbbb</UserPassword>
+    <Name>raph21</Name>
+    <AvatarPath>C:\Users\Raph\Documents\al-bar.png</AvatarPath>
 </ns2:userXml>

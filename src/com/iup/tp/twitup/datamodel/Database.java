@@ -113,13 +113,26 @@ public class Database implements IDatabase
   public void addUser(User userToAdd)
   {
     // Ajout de l'utilisateur
-    this.mUsers.add(userToAdd);
+	  if(!this.mUsers.contains(userToAdd)){
+		  this.mUsers.add(userToAdd);
+		 
+		// Notification des observateurs
+		for (IDatabaseObserver observer : mObservers)
+		{
+		  observer.notifyUserAdded(userToAdd);
+		}
+	  }
+	  else{
 
-    // Notification des observateurs
-    for (IDatabaseObserver observer : mObservers)
-    {
-      observer.notifyUserAdded(userToAdd);
-    }
+		  this.mUsers.add(userToAdd);
+		 
+		// Notification des observateurs
+		for (IDatabaseObserver observer : mObservers)
+		{
+		  observer.notifyUserModified(userToAdd);
+		}
+	  
+	  }
   }
 
   /**

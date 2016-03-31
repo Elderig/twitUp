@@ -120,7 +120,6 @@ public class TwitupHomeView extends JPanel implements IView{
 	}
 	
 	public void addComponentTwit(Twit twit){
-		System.out.println("I add a twit bitch !");
 		TwitComponent twitcomponent=new TwitComponent(twit,ligne,twitupTwitController );
 		this.add(twitcomponent,new GridBagConstraints(0, ligne, 1, 1, 1, 1,
 				GridBagConstraints.LINE_START, GridBagConstraints.NONE, new Insets(
@@ -131,7 +130,6 @@ public class TwitupHomeView extends JPanel implements IView{
 	}
 	
 	public void removeComponentTwit(TwitComponent twitComponent){
-		System.out.println("I remove a twit bitch !");
 		this.remove(twitComponent);
 		ligne--;
 	}
