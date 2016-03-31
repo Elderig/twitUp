@@ -4,12 +4,19 @@ import java.awt.Component;
 import java.awt.Desktop;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 
 import javax.imageio.ImageIO;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -29,6 +36,7 @@ public class TwitupInscriptionView extends JPanel implements IView{
 	 * Controller user
 	 */
 	public TwitupUserController twitupUserController;
+	public String chemin_image;
 
 
 	/**
@@ -62,9 +70,12 @@ public class TwitupInscriptionView extends JPanel implements IView{
 		JButton buttonInscription = new JButton("S'inscrire");
 		buttonInscription.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent event){
-				if (usernameText.getText() != null && passwordText.getText() != null 
-						&& usertagText.getText() != null){
-					twitupUserController.inscription(usernameText.getText(), passwordText.getText(), usertagText.getText(),"");
+				if (usernameText.getText().length()>0 && passwordText.getText().length()>0 
+						&& usertagText.getText().length()>0){
+					Path pathSource = Paths.get(chemin_image);
+					Path pathDestination = Paths.get("C:\\Users\\Raph\\workspace\\TPTwit\\src\\resources\\images\\"+usernameText.getText()+".jpg");
+					copier(pathSource,pathDestination);
+					twitupUserController.inscription(usernameText.getText(), passwordText.getText(), usertagText.getText(),"C:\\Users\\Raph\\workspace\\TPTwit\\src\\resources\\images\\"+usernameText.getText()+".jpg");
 				}else{
 					JOptionPane.showMessageDialog(null, "Identifiants incorrects", "Erreur identifiants", JOptionPane.INFORMATION_MESSAGE);
 					usernameText.setText("");
@@ -74,10 +85,11 @@ public class TwitupInscriptionView extends JPanel implements IView{
 			}
 		});
 		
-		/*ImageIcon icon = new ImageIcon(getClass().getResource("/resources/images/default_image.jpeg"));
-		JLabel imageLabel=new JLabel(icon);*/
-		//File f=new File(""));
-		//ImagePanel ProfileImage=new ImagePanel();
+		ImageIcon icon = new ImageIcon(getClass().getResource("/resources/images/default_image.jpeg"));
+		chemin_image="C:\\Users\\Raph\\workspace\\TPTwit\\src\\resources\\images\\default_image.jpeg";
+		icon.getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT);
+		JLabel imageLabel=new JLabel(icon);
+	
 		JButton btnParcourir = new JButton("Parcourir...");
 		btnParcourir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -86,16 +98,17 @@ public class TwitupInscriptionView extends JPanel implements IView{
 				FileFilter imageFilter = new FileNameExtensionFilter(
 					    "Image files", ImageIO.getReaderFileSuffixes());
 				fc.setFileFilter(imageFilter);
-				
 				int returnVal = fc.showDialog(btnParcourir,"Attach");
 				if (returnVal == JFileChooser.APPROVE_OPTION) {
 					File file = fc.getSelectedFile();
-					//This is where a real application would open the file.
 					String chemin = fc.getSelectedFile().getAbsolutePath().toString();
-					//imageLabel.setIcon(new ImageIcon(chemin));
-					System.out.println(chemin);
-				} else {
-					String chemin="";
+					ImageIcon newIcon=new ImageIcon(chemin);
+					Image img = newIcon.getImage();
+					Image newimg = img.getScaledInstance(100, 100,  java.awt.Image.SCALE_SMOOTH);
+					newIcon = new ImageIcon(newimg);
+					imageLabel.setIcon(newIcon);
+					chemin_image=chemin;
+
 				}
 			}
 		}); 
@@ -122,9 +135,9 @@ public class TwitupInscriptionView extends JPanel implements IView{
 		this.add(btnParcourir, new GridBagConstraints(0, 4, 1, 1, 1, 1,
 				GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(
 						5, 5, 0, 5), 0, 0));
-		/*this.add(imageLabel, new GridBagConstraints(1, 4, 1, 1, 1, 1,
+		this.add(imageLabel, new GridBagConstraints(1, 4, 1, 1, 1, 1,
 				GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(
-						5, 5, 0, 5), 0, 0));*/
+						5, 5, 0, 5), 0, 0));
 		this.add(buttonInscription, new GridBagConstraints(1, 5, 1, 1, 1, 1,
 				GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(
 						5, 5, 0, 5), 0, 0));
@@ -139,5 +152,15 @@ public class TwitupInscriptionView extends JPanel implements IView{
 	public void refresh() {
 		// TODO Auto-generated method stub
 
+	}
+	
+	public static boolean copier(Path source, Path destination) { 
+	    try {  
+	       Files.copy(source, destination, StandardCopyOption.REPLACE_EXISTING); 
+	    } catch (IOException e) { 
+	        e.printStackTrace(); 
+	        return false; 
+	    } 
+	    return true; 
 	}
 }

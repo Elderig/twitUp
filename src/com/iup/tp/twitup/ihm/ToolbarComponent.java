@@ -15,12 +15,14 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JTextPane;
 import javax.swing.JToolBar;
 import javax.swing.KeyStroke;
 import javax.swing.border.BevelBorder;
 
+import com.iup.tp.twitup.core.Twitup;
 import com.iup.tp.twitup.datamodel.IDatabase;
 import com.iup.twitup.controllers.TwitupTwitController;
 import com.iup.twitup.controllers.TwitupUserController;
@@ -37,13 +39,16 @@ public class ToolbarComponent extends JPanel {
   
   public TwitupUserController twitupUserController;
   
+  public Twitup twitup;
+  
   protected IDatabase mDatabase;
   
   protected Integer charge=1;
   
-	public ToolbarComponent(IDatabase database, TwitupTwitController twitupTwitController, TwitupUserController twitupUserController){
+	public ToolbarComponent(IDatabase database, TwitupTwitController twitupTwitController, TwitupUserController twitupUserController, Twitup twitup){
 		toolBar=new JToolBar();
 		mDatabase = database;
+		this.twitup=twitup;
 		this.twitupTwitController = twitupTwitController;
 		this.twitupUserController = twitupUserController;
 		init();
@@ -69,6 +74,14 @@ public class ToolbarComponent extends JPanel {
 		}
 	});
     toolBar.add(profil);
+    
+    JButton liste_utilisateurs = new JButton("Liste des utilisateurs");
+    liste_utilisateurs.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+			twitup.goToListUser();
+		}
+	});
+	toolBar.add(liste_utilisateurs);
     
     this.add(toolBar);
     charge=0;

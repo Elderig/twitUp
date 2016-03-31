@@ -31,7 +31,7 @@ import com.iup.twitup.controllers.TwitupTwitController;
 
 public class TwitupMainView extends JFrame
 {
-		
+
 	//Controler
 	protected Twitup twitup;
 
@@ -44,9 +44,13 @@ public class TwitupMainView extends JFrame
 	 * Gestionnaire de bdd et de fichier.
 	 */
 	protected EntityManager mEntityManager;
+
+	protected JMenuBar menuBar=new JMenuBar();
 	
+	protected JPanel p = new JPanel();
+
 	protected ToolbarComponent toolbar;
-	
+
 	/**
 	 * Panel main
 	 * @param twitup
@@ -54,11 +58,11 @@ public class TwitupMainView extends JFrame
 	 * @param entityManager
 	 */
 	public JPanel mainPanel;
-	
+
 	public CardLayout cardLayout = new CardLayout();
 
 	protected Map<EViews,IView> views = new HashMap<EViews,IView>();
-	
+
 	/*
 	 * Constructeur.
 	 * 
@@ -69,7 +73,7 @@ public class TwitupMainView extends JFrame
 		this.twitup=twitup;
 		this.mDatabase = database;
 		this.mEntityManager = entityManager;
-		
+
 		mainPanel = new JPanel();
 		cardLayout = new CardLayout();
 	}
@@ -112,12 +116,12 @@ public class TwitupMainView extends JFrame
 	private void initGUI() throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
 		// Création de la fenetre principale
 		this.setName(Globals.NAME_FRAME);
-		
-		JPanel p = new JPanel();
+
+
 		this.setContentPane(p);
 		ImageIcon iconIUP1 = new ImageIcon(getClass().getResource(Globals.URL_ICON_IUP_20));
 		this.setIconImage(iconIUP1.getImage());
-		
+
 		Properties prop = PropertiesManager.loadProperties(Globals.URL_PROPERTIES);
 		try{
 			if(prop.getProperty(Constants.CONFIGURATION_KEY_UI_CLASS_NAME).isEmpty()){
@@ -131,13 +135,13 @@ public class TwitupMainView extends JFrame
 			prop.setProperty(Constants.CONFIGURATION_KEY_UI_CLASS_NAME,UIManager.getSystemLookAndFeelClassName());
 			PropertiesManager.writeProperties(prop, Globals.URL_PROPERTIES);
 			UIManager.setLookAndFeel(prop.getProperty(Constants.CONFIGURATION_KEY_UI_CLASS_NAME));
-        }
+		}
 
-		
+
 		JFileChooser fileChooser = new JFileChooser();
 		fileChooser.setDialogTitle(Globals.TITLE_CHOOSER);
 		fileChooser.setFileSelectionMode( JFileChooser.DIRECTORIES_ONLY);
-		
+
 		Properties prop1 = PropertiesManager.loadProperties(Globals.URL_PROPERTIES);
 		File f = new File(prop1.getProperty(Constants.CONFIGURATION_KEY_EXCHANGE_DIRECTORY));
 		if(!f.exists()){
@@ -150,9 +154,8 @@ public class TwitupMainView extends JFrame
 			}
 		}
 
-		
+
 		// Menu Onglet Fichier
-		JMenuBar menuBar=new JMenuBar();
 		JMenu menuFichier = new JMenu(Globals.TITLE_MENU_FILE);
 		JMenuItem menuItemChangeRep = new JMenuItem(Globals.TITLE_SUB_MENU_CHANGE_REP);
 		menuItemChangeRep.addActionListener(new ActionListener() {
@@ -166,42 +169,35 @@ public class TwitupMainView extends JFrame
 				}
 			}
 		});
-		
+
 		JMenuItem menuItemDeconnexion = new JMenuItem("Se déconnecter");
 		menuItemDeconnexion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
 				twitup.logout();
 			}
 		});
-		
-		JMenuItem menuItemListUser = new JMenuItem("Liste des utilisateurs");
-		menuItemListUser.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				twitup.goToListUser();
-			}
-		});
-		
+
 		JMenuItem menuItemChangeUI = new JMenuItem(Globals.TITLE_SUB_MENU_CHANGE_UI);
 		menuItemChangeUI.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
-			    UIManager.LookAndFeelInfo[] looks = UIManager.getInstalledLookAndFeels();
-			    HashMap<String,String> hm = new HashMap<String,String>();
-			    for (UIManager.LookAndFeelInfo look : looks) {
-			      hm.put(look.getName(), look.getClassName());
-			    }
-			    String DefaultValue="";
-			    for (Entry<String, String> e : hm.entrySet()) {
-			    	String value = e.getValue();
-			        if(value.equals(prop.getProperty(Constants.CONFIGURATION_KEY_UI_CLASS_NAME))){
-			        	DefaultValue=e.getKey();
-			        }
-			    }
+				UIManager.LookAndFeelInfo[] looks = UIManager.getInstalledLookAndFeels();
+				HashMap<String,String> hm = new HashMap<String,String>();
+				for (UIManager.LookAndFeelInfo look : looks) {
+					hm.put(look.getName(), look.getClassName());
+				}
+				String DefaultValue="";
+				for (Entry<String, String> e : hm.entrySet()) {
+					String value = e.getValue();
+					if(value.equals(prop.getProperty(Constants.CONFIGURATION_KEY_UI_CLASS_NAME))){
+						DefaultValue=e.getKey();
+					}
+				}
 				String Input=(String) JOptionPane.showInputDialog(TwitupMainView.this, 
-				        Globals.TITLE_SELECT_LF,
-				        Globals.TITLE_OPTIONJPANE_LF,
-				        JOptionPane.QUESTION_MESSAGE, 
-				        null, hm.keySet().toArray(), 
-				        DefaultValue);
+						Globals.TITLE_SELECT_LF,
+						Globals.TITLE_OPTIONJPANE_LF,
+						JOptionPane.QUESTION_MESSAGE, 
+						null, hm.keySet().toArray(), 
+						DefaultValue);
 				if(Input!=null){
 					prop.setProperty(Constants.CONFIGURATION_KEY_UI_CLASS_NAME,hm.get(Input));
 					PropertiesManager.writeProperties(prop, Globals.URL_PROPERTIES);	
@@ -219,7 +215,7 @@ public class TwitupMainView extends JFrame
 				}
 			}
 		});
-		
+
 		JMenuItem menuItemQuitter = new JMenuItem(Globals.TITLE_SUB_MENU_EXIT);
 		ImageIcon iconExit = new ImageIcon(getClass().getResource(Globals.URL_ICON_EXIT));
 		menuItemQuitter.addActionListener(new ActionListener() {
@@ -227,7 +223,7 @@ public class TwitupMainView extends JFrame
 				System.exit(0);
 			}
 		});
-		menuFichier.add(menuItemListUser);
+
 		menuItemQuitter.setIcon(iconExit);
 		menuItemQuitter.setToolTipText(Globals.TOOLTIP_EXIT);
 		menuFichier.add(menuItemChangeRep);
@@ -249,28 +245,26 @@ public class TwitupMainView extends JFrame
 		menuAide.add(menuItemAPropos);
 		menuBar.add(menuAide);
 
-		
-		//JPanel p2 = new JPanel();
 		p.setLayout(new BorderLayout());
 		mainPanel.setLayout(cardLayout);
-		//p2.add(mainPanel,BorderLayout.WEST);
-		
-		/*mainPanel.add(cardLayout, BorderLayout.EAST)
-		mainPanel.setLayout(cardLayout);*/
-	
-		//
-		// Ajout des composants à la fenêtre
 		this.setJMenuBar(menuBar);
 		p.add(mainPanel,BorderLayout.CENTER);
-		toolbar=new ToolbarComponent(mDatabase,twitup.getTwitupTwitController(),twitup.getTwitupUserController());
-		p.add(toolbar, BorderLayout.NORTH);
 
 		setVisible(true);
 	}
-	
+
 	public void add(EViews ev, IView iview){
 		views.put(ev, iview);
-		
+
+	}
+
+	public void addToolbar(){
+		toolbar=new ToolbarComponent(mDatabase,twitup.getTwitupTwitController(),twitup.getTwitupUserController(),twitup);
+		p.add(toolbar, BorderLayout.NORTH);
+	}
+	
+	public void removeToolbar(){
+		p.remove(toolbar);
 	}
 	
 	public void show(EViews ev){
@@ -278,7 +272,7 @@ public class TwitupMainView extends JFrame
 		cardLayout.show(mainPanel, ""+ev);
 		this.pack();
 	}
-	
+
 	public ToolbarComponent getToolbar() {
 		return toolbar;
 	}

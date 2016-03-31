@@ -36,6 +36,6 @@ public interface Globals
   
   public static final String DECONNEXION = "Se déconnecter";
   
-  public static final String USER_LIST = "List des utilisateurs";
+  public static final String USER_LIST = "Liste des utilisateurs";
   
 }

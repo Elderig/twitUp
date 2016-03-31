@@ -224,6 +224,11 @@ public class Twitup
 	}
 	
 	public void propagerCurrentUser(User currentUser){
+		if(currentUser!=null){
+			mMainView.addToolbar();
+		}else{
+			mMainView.removeToolbar();
+		}
 		this.setCurrentUser(currentUser);
 		twitupTwitController.setUser(currentUser);
 		twitupUserController.setUser(currentUser);
