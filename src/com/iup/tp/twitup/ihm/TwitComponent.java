@@ -1,6 +1,7 @@
 package com.iup.tp.twitup.ihm;
 
 import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -34,6 +35,8 @@ public class TwitComponent extends JPanel{
 	private Date d;
 
 	public TwitComponent(Twit twitCreated, Integer ligne, TwitupTwitController controller){
+		
+		this.setLayout(new GridBagLayout());
 		
 		twitupTwitController = controller;
 		

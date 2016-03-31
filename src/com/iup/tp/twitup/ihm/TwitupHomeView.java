@@ -10,7 +10,9 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import javax.swing.JButton;
@@ -38,7 +40,7 @@ public class TwitupHomeView extends JPanel implements IView{
 	
 	protected Integer ligne=1;
 	
-	protected ArrayList<TwitComponent> listTwits;
+	protected Map<Twit,TwitComponent> listTwits;
 
 	public TwitupHomeView(IDatabase database, TwitupTwitController twitupTwitController){
 		mDatabase = database;
@@ -48,9 +50,10 @@ public class TwitupHomeView extends JPanel implements IView{
 	public void init(){
 
 			this.setLayout(new GridBagLayout());
+			
+			listTwits = new HashMap<Twit,TwitComponent>();
 
-			//Liste de tout les twits
-			listTwits = new ArrayList<TwitComponent>();
+			ligne = 1;
 			
 			JLabel titleTwitList = new JLabel("Liste des twits");
 
@@ -93,15 +96,44 @@ public class TwitupHomeView extends JPanel implements IView{
 
 		}
 
+	public void afficherTwit(Set<Twit> listToPaint){
+		if(!listToPaint.isEmpty()){
+			for(Twit t : listToPaint){
+				if(listTwits.get(t)==null){
+					addComponentTwit(t);
+				}
+			}
+			Map<Twit,TwitComponent> listTwitsToDelete = new HashMap<Twit, TwitComponent>();
+			for(TwitComponent tc : listTwits.values()){
+				if(!listToPaint.contains(tc.getTwit())){
+					listTwitsToDelete.put(tc.getTwit(), tc);
+					removeComponentTwit(tc);
+				}
+			}
+			
+			for(Twit t : listTwitsToDelete.keySet()){
+				if(listTwits.get(t)!=null){
+					listTwits.remove(t);
+				}
+			}
+		}
+	}
+	
 	public void addComponentTwit(Twit twit){
-
+		System.out.println("I add a twit bitch !");
 		TwitComponent twitcomponent=new TwitComponent(twit,ligne,twitupTwitController );
-		listTwits.add(twitcomponent);
 		this.add(twitcomponent,new GridBagConstraints(0, ligne, 1, 1, 1, 1,
 				GridBagConstraints.LINE_START, GridBagConstraints.NONE, new Insets(
 						5, 5, 0, 5), 0, 0));
+		listTwits.put(twit, twitcomponent);
 		ligne++;
 		
+	}
+	
+	public void removeComponentTwit(TwitComponent twitComponent){
+		System.out.println("I remove a twit bitch !");
+		this.remove(twitComponent);
+		ligne--;
 	}
 	
 	@Override
@@ -117,13 +149,13 @@ public class TwitupHomeView extends JPanel implements IView{
 		}
 		
 	}
-	
-	public ArrayList<TwitComponent> getListTwits() {
-		return listTwits;
+
+	public Integer getLigne() {
+		return ligne;
 	}
 
-	public void setListTwits(ArrayList<TwitComponent> listTwits) {
-		this.listTwits = listTwits;
+	public void setLigne(Integer ligne) {
+		this.ligne = ligne;
 	}
 
 	public void notifNewTweet(String userTag){
