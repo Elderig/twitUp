@@ -97,24 +97,22 @@ public class TwitupHomeView extends JPanel implements IView{
 		}
 
 	public void afficherTwit(Set<Twit> listToPaint){
-		if(!listToPaint.isEmpty()){
-			for(Twit t : listToPaint){
-				if(listTwits.get(t)==null){
-					addComponentTwit(t);
-				}
+		for(Twit t : listToPaint){
+			if(listTwits.get(t)==null){
+				addComponentTwit(t);
 			}
-			Map<Twit,TwitComponent> listTwitsToDelete = new HashMap<Twit, TwitComponent>();
-			for(TwitComponent tc : listTwits.values()){
-				if(!listToPaint.contains(tc.getTwit())){
-					listTwitsToDelete.put(tc.getTwit(), tc);
-					removeComponentTwit(tc);
-				}
+		}
+		Map<Twit,TwitComponent> listTwitsToDelete = new HashMap<Twit, TwitComponent>();
+		for(TwitComponent tc : listTwits.values()){
+			if(!listToPaint.contains(tc.getTwit())){
+				listTwitsToDelete.put(tc.getTwit(), tc);
+				removeComponentTwit(tc);
 			}
-			
-			for(Twit t : listTwitsToDelete.keySet()){
-				if(listTwits.get(t)!=null){
-					listTwits.remove(t);
-				}
+		}
+		
+		for(Twit t : listTwitsToDelete.keySet()){
+			if(listTwits.get(t)!=null){
+				listTwits.remove(t);
 			}
 		}
 	}
@@ -126,12 +124,14 @@ public class TwitupHomeView extends JPanel implements IView{
 						5, 5, 0, 5), 0, 0));
 		listTwits.put(twit, twitcomponent);
 		ligne++;
+		refresh();
 		
 	}
 	
 	public void removeComponentTwit(TwitComponent twitComponent){
 		this.remove(twitComponent);
 		ligne--;
+		refresh();
 	}
 	
 	@Override

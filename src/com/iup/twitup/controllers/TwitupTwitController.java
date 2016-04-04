@@ -93,18 +93,18 @@ public class TwitupTwitController implements IDatabaseObserver{
 		for(Twit t : listTwits){
 			if(text.equals("")){
 				listToSendToView.add(t);
-			}else if (t.getText().contains(text)
-					|| t.getTwiter().getName().contains(text)
-					|| t.getTags().contains(text)
-					|| t.getUserTags().contains(text)){
-				listToSendToView.add(t);
 			}else if(text.substring(0,1).equals(Constants.USER_TAG_DELIMITER)
 					&& text.substring(1, text.length()).equals(t.getTwiter().getName())){
 				listToSendToView.add(t);
 			}else if (text.substring(0,1).equals(Constants.WORD_TAG_DELIMITER) 
 					&& t.getUserTags().contains(text.substring(1, text.length()))){
 				listToSendToView.add(t);
-			}	
+			}else if (t.getText().contains(text)
+					|| t.getTwiter().getName().contains(text)
+					|| t.getTags().contains(text)
+					|| t.getUserTags().contains(text)){
+				listToSendToView.add(t);
+			}
 		}
 		accueilPanel.afficherTwit(listToSendToView);
 	}
