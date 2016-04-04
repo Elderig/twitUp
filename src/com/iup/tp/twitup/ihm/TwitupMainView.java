@@ -88,21 +88,29 @@ public class TwitupMainView extends JFrame
 	public void showGUI() throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException{
 		this.initGUI();
 		// Affichage dans l'EDT
-		SwingUtilities.invokeLater(new Runnable() {
+		 // taille et position
+	      setPreferredSize(new Dimension(600, 600));
+	     // setLocation(100,100); // la fenêtre est en 100, 100
+	      //setLocationRelativeTo(null); // la fenêtre est centrée à l'écran
+	      // rendre la fenêtre visible, pack fait en sorte que tous les composants de l'application soient à
+	      // leur preferredSize, ou au dessus
+	      pack();
+	      setVisible(true);
+		/*SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run() {
 				// Custom de l'affichage
-				Dimension screenSize = java.awt.Toolkit.getDefaultToolkit()
+				/*Dimension screenSize = java.awt.Toolkit.getDefaultToolkit()
 						.getScreenSize();
-				setLocation((screenSize.width - getWidth()) / 6,
-						(screenSize.height - getHeight()) / 4);
+				setLocation((screenSize.width),
+						(screenSize.height));
 
 				// Affichage
-				setVisible(true);
+				
 
-				pack();
+				
 			}
-		});
+		});*/
 	}
 
 
