@@ -54,8 +54,6 @@ public class TwitupInscriptionView extends JPanel implements IView{
 		this.setLayout(new GridBagLayout());
 
 		JLabel usernameLabel = new JLabel("Nom utilisateur");
-
-		JLabel image = new JLabel();
 		
 		JTextField usernameText = new JTextField(20);
 
@@ -73,9 +71,12 @@ public class TwitupInscriptionView extends JPanel implements IView{
 				if (usernameText.getText().length()>0 && passwordText.getText().length()>0 
 						&& usertagText.getText().length()>0){
 					Path pathSource = Paths.get(chemin_image);
-					Path pathDestination = Paths.get("C:\\Users\\Raph\\workspace\\TPTwit\\src\\resources\\images\\"+usernameText.getText()+".jpg");
+					Path pathDestination = Paths.get("C:\\Users\\Mael\\Documents\\WorkspaceIHM\\src\\resources\\images\\"+usernameText.getText()+".jpg");
 					copier(pathSource,pathDestination);
 					twitupUserController.inscription(usernameText.getText(), passwordText.getText(), usertagText.getText(),"C:\\Users\\Raph\\workspace\\TPTwit\\src\\resources\\images\\"+usernameText.getText()+".jpg");
+					usernameText.setText("");
+					passwordText.setText("");
+					usertagText.setText("");
 				}else{
 					JOptionPane.showMessageDialog(null, "Identifiants incorrects", "Erreur identifiants", JOptionPane.INFORMATION_MESSAGE);
 					usernameText.setText("");
@@ -86,7 +87,7 @@ public class TwitupInscriptionView extends JPanel implements IView{
 		});
 		
 		ImageIcon icon = new ImageIcon(getClass().getResource("/resources/images/default_image.jpeg"));
-		chemin_image="C:\\Users\\Raph\\workspace\\TPTwit\\src\\resources\\images\\default_image.jpeg";
+		chemin_image="C:\\Users\\Mael\\Documents\\WorkspaceIHM\\src\\resources\\images\\default_image.jpeg";
 		icon.getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT);
 		JLabel imageLabel=new JLabel(icon);
 	
@@ -150,8 +151,10 @@ public class TwitupInscriptionView extends JPanel implements IView{
 
 	@Override
 	public void refresh() {
-		// TODO Auto-generated method stub
-
+		if(this.getParent() != null){
+			this.getParent().revalidate();
+			this.getParent().repaint();
+		}
 	}
 	
 	public static boolean copier(Path source, Path destination) { 

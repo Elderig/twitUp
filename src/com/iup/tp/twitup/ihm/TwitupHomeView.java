@@ -27,6 +27,7 @@ import javax.swing.JTextField;
 import com.iup.tp.twitup.common.Globals;
 import com.iup.tp.twitup.datamodel.IDatabase;
 import com.iup.tp.twitup.datamodel.Twit;
+import com.iup.tp.twitup.datamodel.User;
 import com.iup.twitup.controllers.TwitupTwitController;
 
 public class TwitupHomeView extends JPanel implements IView{
@@ -115,6 +116,20 @@ public class TwitupHomeView extends JPanel implements IView{
 				listTwits.remove(t);
 			}
 		}
+		
+		//for de modification des userComponent pour le boutton follow
+				if(twitupTwitController.getUser() != null){
+					User user = twitupTwitController.getUser();
+					for(TwitComponent tc : listTwits.values()){
+						if(tc.getCreateurTwit().getName().equals(user.getName())){
+							tc.getFollowButton().setVisible(false);
+						}else if(user.getFollows().contains(tc.getCreateurTwit().getUserTag())){
+							tc.getFollowButton().setText("Se désabonner");
+						}else{
+							tc.getFollowButton().setText("S'abonner");
+						}
+					}
+				}
 	}
 	
 	public void addComponentTwit(Twit twit){

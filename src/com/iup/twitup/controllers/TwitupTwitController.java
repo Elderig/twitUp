@@ -83,8 +83,24 @@ public class TwitupTwitController implements IDatabaseObserver{
 		this.controllerParent = controllerParent;
 	}
 	
-	public void addFollower(String tagToFollow){
-		user.addFollowing(tagToFollow);
+	public boolean addFollower(String tagToFollow){
+		if(user.addFollowing(tagToFollow)){
+			sendUser(user);
+			return true;
+		}
+		return false;
+	}
+	
+	public boolean removeFollower(String tagToFollow){
+		if (user.removeFollowing(tagToFollow)){
+			sendUser(user);
+			return true;
+		}
+		return false;
+	}
+	
+	public void sendUser(User modifiedUser) {
+		this.mEntityManager.sendUser(modifiedUser);
 	}
 	
 	public void rechercher(String text){
@@ -109,6 +125,11 @@ public class TwitupTwitController implements IDatabaseObserver{
 		accueilPanel.afficherTwit(listToSendToView);
 	}
 	
+	public void refreshTwitList(){
+		System.out.println("refresh twit list");
+		accueilPanel.afficherTwit(listTwits);
+	}
+	
 	@Override
 	public void notifyTwitAdded(Twit addedTwit) {
 		// TODO Auto-generated method stub
@@ -126,7 +147,10 @@ public class TwitupTwitController implements IDatabaseObserver{
 	@Override
 	public void notifyTwitDeleted(Twit deletedTwit) {
 		// TODO Auto-generated method stub
-		
+		listTwits = mDatabase.getTwits();
+		listTwits.remove(deletedTwit);
+		accueilPanel.afficherTwit(listTwits);
+		accueilPanel.refresh();
 	}
 
 	@Override

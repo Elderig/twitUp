@@ -60,7 +60,7 @@ public class Twitup
 	/**
 	 * Idnique si le mode bouchoné est activé.
 	 */
-	protected boolean mIsMockEnabled = true;
+	protected boolean mIsMockEnabled = false;
 	/**
 	 * Nom de la classe de l'UI.
 	 */
@@ -237,7 +237,12 @@ public class Twitup
 		this.setCurrentUser(currentUser);
 		twitupTwitController.setUser(currentUser);
 		twitupUserController.setUser(currentUser);
+		twitupUserController.refreshUserList();
 		twitupUserController.refreshProfil(currentUser);
+	}
+	
+	public void refreshListTwit(){
+		twitupTwitController.refreshTwitList();
 	}
 	
 	public TwitupUserController getTwitupUserController() {

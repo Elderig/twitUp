@@ -26,7 +26,7 @@ public class TwitComponent extends JPanel{
 	private static final long serialVersionUID = 1L;
 	private JLabel textTwit;
 	private JLabel dateTwit;
-	private JButton followUser;
+	private JButton followButton;
 	private User createurTwit;
 	private Twit twit;
 	
@@ -56,15 +56,14 @@ public class TwitComponent extends JPanel{
 		dateTwit=new JLabel(s);
 		
 		//Button de follow
-		followUser =new JButton("Follow " + twit.getTwiter().getName());
-		followUser.addActionListener(new ActionListener(){
+		followButton = new JButton("S'abonner");
+		followButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent event){
-				if(twitupTwitController.getUser().getName() != twit.getTwiter().getName()){
-					twitupTwitController.addFollower(twit.getTwiter().getUserTag());
-				}else{
-					JOptionPane.showMessageDialog(null, "Vous ne pouvez pas vous follow vous-même", "Erreur follow", JOptionPane.INFORMATION_MESSAGE);
+				if(followButton.getText().equalsIgnoreCase("S'abonner") && twitupTwitController.addFollower(createurTwit.getUserTag())){
+					JOptionPane.showMessageDialog(null, "Vous êtes abonné à "+createurTwit.getUserTag(), "Abonnement OK", JOptionPane.INFORMATION_MESSAGE);
+				}else if(followButton.getText().equalsIgnoreCase("Se désabonner") && twitupTwitController.removeFollower(createurTwit.getUserTag())){
+					JOptionPane.showMessageDialog(null, "Vous n'êtes plus abonné à "+createurTwit.getUserTag(), "Désabonnement OK", JOptionPane.INFORMATION_MESSAGE);	
 				}
-				
 			}
 		});
 		
@@ -75,7 +74,7 @@ public class TwitComponent extends JPanel{
 		this.add(dateTwit, new GridBagConstraints(1, ligne, 1, 1, 1, 1,
 				GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(
 						5, 5, 0, 5), 0, 0));
-		this.add(followUser, new GridBagConstraints(2, ligne, 1, 1, 1, 1,
+		this.add(followButton, new GridBagConstraints(2, ligne, 1, 1, 1, 1,
 				GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(
 						5, 5, 0, 5), 0, 0));
 	}
@@ -96,12 +95,12 @@ public class TwitComponent extends JPanel{
 		this.dateTwit = dateTwit;
 	}
 
-	public JButton getFollowUser() {
-		return followUser;
+	public JButton getFollowButton() {
+		return followButton;
 	}
 
-	public void setFollowUser(JButton followUser) {
-		this.followUser = followUser;
+	public void setFollowButton(JButton followUser) {
+		this.followButton = followUser;
 	}
 
 	public User getCreateurTwit() {
