@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns2:userXml xmlns:ns2="http://www.example.org/twit/">
+    <ID>c4165627-564f-4eda-9f40-7101707b8ec6</ID>
+    <UserTag>riri</UserTag>
+    <UserPassword>a</UserPassword>
+    <Name>toto</Name>
+    <AvatarPath>C:\Users\Raph\Documents\al-bar.png</AvatarPath>
+</ns2:userXml>

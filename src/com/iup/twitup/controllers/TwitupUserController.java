@@ -91,8 +91,7 @@ public class TwitupUserController implements IDatabaseObserver{
 		// Création d'un utilisateur fictif
 		User newUser = this.generateUser(username, password, usertag, url_image);
 
-		// Génération du fichier utilisateur
-		this.mEntityManager.sendUser(newUser);
+		sendUser(newUser);
 		controllerParent.goToConnexion();
 	}
 	
@@ -147,7 +146,11 @@ public class TwitupUserController implements IDatabaseObserver{
 	@Override
 	public void notifyUserModified(User modifiedUser) {
 		// TODO Auto-generated method stub
-		
+		controllerParent.propagerCurrentUser(modifiedUser);
+	}
+
+	public void sendUser(User modifiedUser) {
+		this.mEntityManager.sendUser(modifiedUser);
 	}
 	
 	public void refreshProfil(User currentUser){
