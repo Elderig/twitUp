@@ -24,6 +24,8 @@ import com.iup.tp.twitup.ihm.TwitupProfilView;
 import com.iup.tp.twitup.ihm.TwitupTwitCreationView;
 import com.iup.twitup.controllers.TwitupTwitController;
 import com.iup.twitup.controllers.TwitupUserController;
+
+import mock.MockController;
 /**
  * Classe principale l'application.
  * 
@@ -58,7 +60,7 @@ public class Twitup
 	/**
 	 * Idnique si le mode bouchoné est activé.
 	 */
-	protected boolean mIsMockEnabled = false;
+	protected boolean mIsMockEnabled = true;
 	/**
 	 * Nom de la classe de l'UI.
 	 */
@@ -156,8 +158,11 @@ public class Twitup
 	 */
 	protected void initMock()
 	{
-		TwitupMock mock = new TwitupMock(this.mDatabase, this.mEntityManager);
-		mock.showGUI();
+		/*TwitupMock mock = new TwitupMock(this.mDatabase, this.mEntityManager);
+		mock.showGUI();*/
+		
+		MockController mockController = new MockController(mDatabase);
+		mockController.startMock();
 	}
 	/**
 	 * Initialisation de la base de données

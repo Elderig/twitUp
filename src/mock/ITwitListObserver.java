@@ -1,4 +1,4 @@
-package com.iup.tp.twitup.mock;
+package mock;
 
 import java.util.List;
 
