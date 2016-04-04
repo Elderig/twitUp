@@ -1,4 +1,4 @@
-package com.iup.tp.twitup.mock;
+package mock;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -12,10 +12,10 @@ import javafx.scene.layout.GridPane;
 import javax.swing.JPanel;
 
 import com.iup.tp.twitup.datamodel.IDatabase;
-import com.iup.tp.twitup.mock.jfx.MockTwitListComponentJFX;
-import com.iup.tp.twitup.mock.jfx.MockTwitSearchComponentJFX;
-import com.iup.tp.twitup.mock.swing.MockTwitListComponentSwing;
-import com.iup.tp.twitup.mock.swing.MockTwitSearchComponentSwing;
+import jfx.MockTwitListComponentJFX;
+import jfx.MockTwitSearchComponentJFX;
+import swing.MockTwitListComponentSwing;
+import swing.MockTwitSearchComponentSwing;
 
 public class MockController {
 
@@ -36,7 +36,7 @@ public class MockController {
 		this.initSwingComponents(controllerSwing);
 
 		// Init Jfx
-		this.initJFXComponents(controllerJfx);
+		this.initJFXComponents(controllerSwing);
 	}
 
 	protected void initSwingComponents(
