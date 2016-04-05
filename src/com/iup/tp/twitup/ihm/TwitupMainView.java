@@ -194,21 +194,21 @@ public class TwitupMainView extends JFrame
 				for (UIManager.LookAndFeelInfo look : looks) {
 					hm.put(look.getName(), look.getClassName());
 				}
-				String DefaultValue="";
+				String defaultValue="";
 				for (Entry<String, String> e : hm.entrySet()) {
 					String value = e.getValue();
 					if(value.equals(prop.getProperty(Constants.CONFIGURATION_KEY_UI_CLASS_NAME))){
-						DefaultValue=e.getKey();
+						defaultValue=e.getKey();
 					}
 				}
-				String Input=(String) JOptionPane.showInputDialog(TwitupMainView.this, 
+				String input=(String) JOptionPane.showInputDialog(TwitupMainView.this, 
 						Globals.TITLE_SELECT_LF,
 						Globals.TITLE_OPTIONJPANE_LF,
 						JOptionPane.QUESTION_MESSAGE, 
 						null, hm.keySet().toArray(), 
-						DefaultValue);
-				if(Input!=null){
-					prop.setProperty(Constants.CONFIGURATION_KEY_UI_CLASS_NAME,hm.get(Input));
+						defaultValue);
+				if(input!=null){
+					prop.setProperty(Constants.CONFIGURATION_KEY_UI_CLASS_NAME,hm.get(input));
 					PropertiesManager.writeProperties(prop, Globals.URL_PROPERTIES);	
 					try {
 
@@ -218,7 +218,6 @@ public class TwitupMainView extends JFrame
 					} catch (ClassNotFoundException | InstantiationException
 							| IllegalAccessException
 							| UnsupportedLookAndFeelException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}

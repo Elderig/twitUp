@@ -100,7 +100,6 @@ public class TwitupProfilView extends JPanel implements IView{
 				bouton_parcourir.setVisible(false);
 				twitupUserController.getUser().setName(usernameLabel.getText());
 				twitupUserController.getUser().setUserPassword(new String(userpasswordLabel.getPassword()));
-				System.out.println(twitupUserController.getUser().getUserPassword());
 				if(chemin_image!=null){
 					twitupUserController.getUser().setAvatarPath(chemin_image);
 				}
@@ -147,7 +146,7 @@ public class TwitupProfilView extends JPanel implements IView{
 	public void refresh() {
 		if(user != null && user.getName() != null && user.getUserTag() != null){
 			usernameLabel.setText(user.getName());
-			userpasswordLabel.setText(user.getUserTag());
+			userpasswordLabel.setText(user.getUserPassword());
 			ImageIcon newIcon=new ImageIcon(user.getAvatarPath());
 			Image img = newIcon.getImage();
 			Image newimg = img.getScaledInstance(100, 100,  java.awt.Image.SCALE_SMOOTH);
