@@ -1,6 +1,7 @@
 package com.iup.tp.twitup.ihm;
 
 import java.awt.BorderLayout;
+
 import java.awt.CardLayout;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
@@ -181,7 +182,7 @@ public class TwitupMainView extends JFrame
 		JMenuItem menuItemDeconnexion = new JMenuItem("Se déconnecter");
 		menuItemDeconnexion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
-				twitup.logout();
+				//twitup.logout();
 			}
 		});
 

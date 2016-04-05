@@ -1,5 +1,6 @@
 package com.iup.tp.twitup.core;
 import java.awt.CardLayout;
+import com.iup.tp.twitup.common.Globals;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
@@ -25,6 +26,7 @@ import com.iup.tp.twitup.ihm.TwitupTwitCreationView;
 import com.iup.twitup.controllers.TwitupTwitController;
 import com.iup.twitup.controllers.TwitupUserController;
 
+import javafx.event.ActionEvent;
 import mock.MockController;
 /**
  * Classe principale l'application.
@@ -202,6 +204,11 @@ public class Twitup
 	/**
 	 * 
 	 */
+	
+	public void changeDirectory(ActionEvent event){
+		
+	}
+	
 	public void goToConnexion(){
 		mMainView.show(EViews.CONNEXION_VIEW);
 	}
@@ -252,9 +259,13 @@ public class Twitup
 	public void setTwitupTwitController(TwitupTwitController twitupTwitController) {
 		this.twitupTwitController = twitupTwitController;
 	}
-	public void logout(){
+	public void logout(ActionEvent e){
 		this.propagerCurrentUser(null);
 		this.goToConnexion();
+	}
+	
+	public void quitter(ActionEvent e){
+		System.exit(0);
 	}
 	
 }
